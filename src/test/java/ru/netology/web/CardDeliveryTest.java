@@ -29,7 +29,7 @@ public class CardDeliveryTest {
         open("http://localhost:9999/");
     }
 
-    @AfterEach
+   // @AfterEach
     void tearDown() {
         closeWindow();
     }
