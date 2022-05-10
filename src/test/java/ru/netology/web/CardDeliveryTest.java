@@ -28,11 +28,7 @@ public class CardDeliveryTest {
     public void openPage() {
         open("http://localhost:9999/");
     }
-
-    @AfterEach
-    void tearDown() {
-        closeWindow();
-    }
+    
 
     @Test
     public void test() {
