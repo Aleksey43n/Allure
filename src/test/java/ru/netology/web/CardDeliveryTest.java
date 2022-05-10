@@ -28,7 +28,6 @@ public class CardDeliveryTest {
     public void openPage() {
         open("http://localhost:9999/");
     }
-    
 
     @Test
     public void test() {
