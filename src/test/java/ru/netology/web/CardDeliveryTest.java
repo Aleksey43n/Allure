@@ -2,6 +2,7 @@ package ru.netology.web;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
@@ -26,12 +27,16 @@ public class CardDeliveryTest {
 
     public void openPage() {
         open("http://localhost:9999/");
+    }
 
+    @AfterEach
+    void tearDown() {
+        closeWindow();
     }
 
     @Test
     public void test() {
-        Configuration.holdBrowserOpen = true;
+        //Configuration.holdBrowserOpen = true;
         String date = generateDate(3);
         $("[data-test-id=city] input").setValue("Москва");
         $("[data-test-id=date] input").doubleClick();
