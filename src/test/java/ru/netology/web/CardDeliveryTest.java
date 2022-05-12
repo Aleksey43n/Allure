@@ -30,7 +30,7 @@ public class CardDeliveryTest {
     }
 
     @Test
-    public void test() {
+    public void shouldSuccessOrderIfCorrectFilling() {
         //Configuration.holdBrowserOpen = true;
         String date = generateDate(3);
         $("[data-test-id=city] input").setValue("Москва");
