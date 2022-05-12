@@ -48,5 +48,35 @@ public class CardDeliveryTest {
 
     }
 
+    @Test
+    public void shouldUnsuccessOrderIfIncorrectName() {
+        String date = generateDate(3);
+        $("[data-test-id=city] input").setValue("Москва");
+        $("[data-test-id=date] input").doubleClick();
+        $("[data-test-id=date] input")
+                .sendKeys(Keys.chord(BACK_SPACE, date));
+        $("[data-test-id=name] input").setValue("Tinkoff Oleg");
+        $("[data-test-id=phone] input").setValue("+79998887766");
+        $$(".checkbox__box").find(Condition.visible).click();
+        $$("button").find(Condition.exactText("Забронировать")).click();
+        $(withText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."))
+                .shouldBe(Condition.visible);
+
+    }
+
+    @Test
+    public void shouldUnsuccessOrderIfNoName() {
+        String date = generateDate(3);
+        $("[data-test-id=city] input").setValue("Москва");
+        $("[data-test-id=date] input").doubleClick();
+        $("[data-test-id=date] input")
+                .sendKeys(Keys.chord(BACK_SPACE, date));
+        $("[data-test-id=name] input").setValue("");
+        $("[data-test-id=phone] input").setValue("+79998887766");
+        $$(".checkbox__box").find(Condition.visible).click();
+        $$("button").find(Condition.exactText("Забронировать")).click();
+        $(withText("Поле обязательно для заполнения"))
+                .shouldBe(Condition.visible);
+    }
 
 }
