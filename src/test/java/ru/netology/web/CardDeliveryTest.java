@@ -2,7 +2,6 @@ package ru.netology.web;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
@@ -31,7 +30,7 @@ public class CardDeliveryTest {
 
     @Test
     public void shouldSuccessOrderIfCorrectFilling() {
-        //Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = true;
         String date = generateDate(3);
         $("[data-test-id=city] input").setValue("Москва");
         $("[data-test-id=date] input").doubleClick();
@@ -39,12 +38,10 @@ public class CardDeliveryTest {
                 .sendKeys(Keys.chord(BACK_SPACE, date));
         $("[data-test-id=name] input").setValue("Романов Роман");
         $("[data-test-id=phone] input").setValue("+79998887766");
-        $$(".checkbox__box").find(Condition.visible).click();
-        $$("button").find(Condition.exactText("Забронировать")).click();
-        $(withText("Встреча успешно забронирована"))
-                .shouldBe(Condition.visible, Duration.ofSeconds(15));
-        $(withText("Встреча успешно забронирована"))
-                .shouldBe(Condition.text(date));
+        $(".checkbox__box").click();
+        $(withText("Забронировать")).click();
+        $(".notification__content")
+                .shouldHave(Condition.text("Встреча успешно забронирована на " + date), Duration.ofSeconds(15));
 
     }
 
@@ -57,8 +54,8 @@ public class CardDeliveryTest {
                 .sendKeys(Keys.chord(BACK_SPACE, date));
         $("[data-test-id=name] input").setValue("Tinkoff Oleg");
         $("[data-test-id=phone] input").setValue("+79998887766");
-        $$(".checkbox__box").find(Condition.visible).click();
-        $$("button").find(Condition.exactText("Забронировать")).click();
+        $(".checkbox__box").click();
+        $(withText("Забронировать")).click();
         $(withText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."))
                 .shouldBe(Condition.visible);
 
@@ -73,8 +70,8 @@ public class CardDeliveryTest {
                 .sendKeys(Keys.chord(BACK_SPACE, date));
         $("[data-test-id=name] input").setValue("");
         $("[data-test-id=phone] input").setValue("+79998887766");
-        $$(".checkbox__box").find(Condition.visible).click();
-        $$("button").find(Condition.exactText("Забронировать")).click();
+        $(".checkbox__box").click();
+        $(withText("Забронировать")).click();
         $(withText("Поле обязательно для заполнения"))
                 .shouldBe(Condition.visible);
     }
